@@ -48,3 +48,4 @@ src/.vs/
 src/Apparelbase.Worksheet.Viewer.Setup/Apparelbase Worksheet Viewer-cache/
 dotNetFx40_Full_setup.exe
 *.svclog
+.vs/

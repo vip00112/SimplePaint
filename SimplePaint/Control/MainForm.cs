@@ -149,6 +149,7 @@ namespace SimplePaint
                 menuItem_save.Enabled = true;
                 menuItem_saveAs.Enabled = true;
                 panel_canvas.Controls.Add(_canvas);
+                ChangeCanvasCursor();
             }
         }
 
