@@ -243,6 +243,9 @@ namespace SimplePaint
                         _canvas.Cursor = new Cursor(bitmap.GetHicon());
                     }
                     break;
+                default:
+                    _canvas.Cursor = Cursors.Default;
+                    break;
             }
         }
         #endregion
