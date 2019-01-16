@@ -43,6 +43,7 @@ namespace SimplePaint
         private void button_file_Click(object sender, EventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
             if (of.ShowDialog() != DialogResult.OK) return;
 
             string filePath = of.FileName;

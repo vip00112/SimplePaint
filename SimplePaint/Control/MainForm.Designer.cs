@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuItem_file = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem_new = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItem_save = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,21 +48,25 @@
             this.radioButton_square = new System.Windows.Forms.RadioButton();
             this.radioButton_circle = new System.Windows.Forms.RadioButton();
             this.panel_canvas = new System.Windows.Forms.Panel();
-            this.menuStrip1.SuspendLayout();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.trackBar_zoom = new System.Windows.Forms.TrackBar();
+            this.label_zoom = new System.Windows.Forms.Label();
+            this.menuStrip.SuspendLayout();
             this.panel_tool.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_size)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_zoom)).BeginInit();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItem_file});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(584, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(584, 24);
+            this.menuStrip.TabIndex = 0;
+            this.menuStrip.Text = "menuStrip1";
             // 
             // menuItem_file
             // 
@@ -78,7 +82,7 @@
             // menuItem_new
             // 
             this.menuItem_new.Name = "menuItem_new";
-            this.menuItem_new.Size = new System.Drawing.Size(180, 22);
+            this.menuItem_new.Size = new System.Drawing.Size(114, 22);
             this.menuItem_new.Text = "New";
             this.menuItem_new.Click += new System.EventHandler(this.menuItem_new_Click);
             // 
@@ -86,7 +90,7 @@
             // 
             this.menuItem_save.Enabled = false;
             this.menuItem_save.Name = "menuItem_save";
-            this.menuItem_save.Size = new System.Drawing.Size(180, 22);
+            this.menuItem_save.Size = new System.Drawing.Size(114, 22);
             this.menuItem_save.Text = "Save";
             this.menuItem_save.Click += new System.EventHandler(this.menuItem_save_Click);
             // 
@@ -94,14 +98,14 @@
             // 
             this.menuItem_saveAs.Enabled = false;
             this.menuItem_saveAs.Name = "menuItem_saveAs";
-            this.menuItem_saveAs.Size = new System.Drawing.Size(180, 22);
+            this.menuItem_saveAs.Size = new System.Drawing.Size(114, 22);
             this.menuItem_saveAs.Text = "Save as";
             this.menuItem_saveAs.Click += new System.EventHandler(this.menuItem_saveAs_Click);
             // 
             // menuItem_exit
             // 
             this.menuItem_exit.Name = "menuItem_exit";
-            this.menuItem_exit.Size = new System.Drawing.Size(180, 22);
+            this.menuItem_exit.Size = new System.Drawing.Size(114, 22);
             this.menuItem_exit.Text = "Exit";
             this.menuItem_exit.Click += new System.EventHandler(this.menuItem_exit_Click);
             // 
@@ -118,10 +122,12 @@
             this.panel_tool.Controls.Add(this.radioButton_higlighter);
             this.panel_tool.Controls.Add(this.radioButton_square);
             this.panel_tool.Controls.Add(this.radioButton_circle);
+            this.panel_tool.Controls.Add(this.label_zoom);
+            this.panel_tool.Controls.Add(this.trackBar_zoom);
             this.panel_tool.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel_tool.Location = new System.Drawing.Point(0, 24);
             this.panel_tool.Name = "panel_tool";
-            this.panel_tool.Size = new System.Drawing.Size(109, 337);
+            this.panel_tool.Size = new System.Drawing.Size(109, 365);
             this.panel_tool.TabIndex = 1;
             // 
             // panel1
@@ -277,27 +283,60 @@
             this.panel_canvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_canvas.Location = new System.Drawing.Point(109, 24);
             this.panel_canvas.Name = "panel_canvas";
-            this.panel_canvas.Size = new System.Drawing.Size(475, 337);
+            this.panel_canvas.Size = new System.Drawing.Size(475, 365);
             this.panel_canvas.TabIndex = 2;
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Location = new System.Drawing.Point(0, 389);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(584, 22);
+            this.statusStrip.TabIndex = 0;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // trackBar_zoom
+            // 
+            this.trackBar_zoom.AutoSize = false;
+            this.trackBar_zoom.Location = new System.Drawing.Point(3, 318);
+            this.trackBar_zoom.Minimum = 1;
+            this.trackBar_zoom.Name = "trackBar_zoom";
+            this.trackBar_zoom.Size = new System.Drawing.Size(99, 22);
+            this.trackBar_zoom.TabIndex = 3;
+            this.trackBar_zoom.TabStop = false;
+            this.trackBar_zoom.Value = 4;
+            this.trackBar_zoom.ValueChanged += new System.EventHandler(this.trackBar_zoom_ValueChanged);
+            // 
+            // label_zoom
+            // 
+            this.label_zoom.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label_zoom.Location = new System.Drawing.Point(0, 299);
+            this.label_zoom.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.label_zoom.Name = "label_zoom";
+            this.label_zoom.Size = new System.Drawing.Size(99, 16);
+            this.label_zoom.TabIndex = 4;
+            this.label_zoom.Text = "Zoom 100%";
+            this.label_zoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 361);
+            this.ClientSize = new System.Drawing.Size(584, 411);
             this.Controls.Add(this.panel_canvas);
             this.Controls.Add(this.panel_tool);
-            this.Controls.Add(this.menuStrip1);
-            this.MinimumSize = new System.Drawing.Size(600, 400);
+            this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.statusStrip);
+            this.MinimumSize = new System.Drawing.Size(600, 450);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simple Paint";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.panel_tool.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_size)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar_zoom)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -305,7 +344,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem menuItem_file;
         private System.Windows.Forms.ToolStripMenuItem menuItem_new;
         private System.Windows.Forms.ToolStripMenuItem menuItem_save;
@@ -325,6 +364,9 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button_redo;
         private System.Windows.Forms.Button button_undo;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.TrackBar trackBar_zoom;
+        private System.Windows.Forms.Label label_zoom;
     }
 }
 

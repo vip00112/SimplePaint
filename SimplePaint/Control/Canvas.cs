@@ -10,6 +10,7 @@ namespace SimplePaint
 {
     public class Canvas : PictureBox
     {
+        private Image _img;
         private DrawCommand _command;
         private DrawLineMemento _drawLine;
         private DrawSquareMemento _drawSquare;
@@ -25,21 +26,24 @@ namespace SimplePaint
             SetStyle(ControlStyles.ContainerControl, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            SizeMode = PictureBoxSizeMode.Normal;
+            SizeMode = PictureBoxSizeMode.Zoom;
             BackgroundImage = Properties.Resources.cellbackground;
 
             _command = new DrawCommand();
+            ZoomRatio = 1.0F;
         }
 
         public Canvas(int width, int height) : this()
         {
+            _img = ImageUtil.CreateImage(width, height, Color.Transparent);
             Width = width;
             Height = height;
-            Image = ImageUtil.CreateImage(width, height, Color.Transparent);
+            Image = _img;
         }
 
         public Canvas(Image img) : this()
         {
+            _img = img;
             Width = img.Width;
             Height = img.Height;
             Image = img;
@@ -64,6 +68,8 @@ namespace SimplePaint
         public bool CanUndo { get { return _command.CanUndo; } }
 
         public bool CanRedo { get { return _command.CanRedo; } }
+
+        public float ZoomRatio { get; private set; }
         #endregion
 
         #region Protected Method
@@ -81,10 +87,10 @@ namespace SimplePaint
                     _drawLine = new DrawLineMemento(HighlightColor, LineSize);
                     break;
                 case DrawMode.Square:
-                    _drawSquare = new DrawSquareMemento(Color, LineSize, e.Location);
+                    _drawSquare = new DrawSquareMemento(Color, LineSize, CalcScalePoint(e.Location));
                     break;
                 case DrawMode.Circle:
-                    _drawCircle = new DrawCircleMemento(Color, LineSize, e.Location);
+                    _drawCircle = new DrawCircleMemento(Color, LineSize, CalcScalePoint(e.Location));
                     break;
             }
         }
@@ -100,19 +106,19 @@ namespace SimplePaint
                 case DrawMode.Highlighter:
                     if (_drawLine != null)
                     {
-                        _drawLine.AddLocation(e.Location);
+                        _drawLine.AddLocation(CalcScalePoint(e.Location));
                     }
                     break;
                 case DrawMode.Square:
                     if (_drawSquare != null)
                     {
-                        _drawSquare.SetEndLocation(e.Location);
+                        _drawSquare.SetEndLocation(CalcScalePoint(e.Location));
                     }
                     break;
                 case DrawMode.Circle:
                     if (_drawCircle != null)
                     {
-                        _drawCircle.SetEndLocation(e.Location);
+                        _drawCircle.SetEndLocation(CalcScalePoint(e.Location));
                     }
                     break;
             }
@@ -156,6 +162,11 @@ namespace SimplePaint
         {
             base.OnPaint(e);
 
+            if (ZoomRatio != 1.0F)
+            {
+                e.Graphics.ScaleTransform(ZoomRatio, ZoomRatio);
+            }
+
             _command.Draw(e.Graphics);
 
             if (_drawLine != null && _drawLine.CanDraw())
@@ -183,6 +194,15 @@ namespace SimplePaint
         {
             _command.AddMemento(memento.Clone());
             IsSaved = false;
+        }
+
+        private Point CalcScalePoint(Point point)
+        {
+            if (ZoomRatio == 1.0F) return point;
+
+            int x = (int) (point.X / ZoomRatio);
+            int y = (int) (point.Y / ZoomRatio);
+            return new Point(x, y);
         }
         #endregion
 
@@ -215,6 +235,15 @@ namespace SimplePaint
             }
             bitmap.Save(savePath, saveFormat);
             IsSaved = true;
+        }
+
+        public void Zoom(float zoomRatio)
+        {
+            ZoomRatio = zoomRatio;
+
+            Width = (int) (_img.Width * zoomRatio);
+            Height = (int) (_img.Height * zoomRatio);
+            Invalidate();
         }
         #endregion
     }

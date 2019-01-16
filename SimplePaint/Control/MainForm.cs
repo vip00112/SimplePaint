@@ -108,6 +108,22 @@ namespace SimplePaint
             ChangeCanvasCursor();
         }
 
+        private void trackBar_zoom_ValueChanged(object sender, EventArgs e)
+        {
+            if (_canvas == null)
+            {
+                trackBar_zoom.Value = 4;
+                return;
+            }
+
+            int value = trackBar_zoom.Value * 25;
+            label_zoom.Text = string.Format("Zoom {0}%", value);
+
+            float zoomRatio = value / 100F;
+            _canvas.Zoom(zoomRatio);
+            ChangeCanvasCursor();
+        }
+
         private void canvas_Painted(object sender, EventArgs e)
         {
             menuItem_save.Enabled = !_canvas.IsSaved;
@@ -219,26 +235,32 @@ namespace SimplePaint
 
         private void ChangeCanvasCursor()
         {
+            int size = _canvas.LineSize;
+            if (_canvas.ZoomRatio != 1.0F)
+            {
+                size = (int) (size * _canvas.ZoomRatio);
+            }
+            
             switch (_canvas.Mode)
             {
                 case DrawMode.Pen:
                     {
-                        var bitmap = new Bitmap(_canvas.LineSize, _canvas.LineSize);
+                        var bitmap = new Bitmap(size, size);
                         using (var g = Graphics.FromImage(bitmap))
                         using (var brush = new SolidBrush(_canvas.Color))
                         {
-                            g.FillEllipse(brush, 0, 0, _canvas.LineSize, _canvas.LineSize);
+                            g.FillEllipse(brush, 0, 0, bitmap.Width, bitmap.Height);
                         }
                         _canvas.Cursor = new Cursor(bitmap.GetHicon());
                     }
                     break;
                 case DrawMode.Highlighter:
                     {
-                        var bitmap = new Bitmap(_canvas.LineSize, _canvas.LineSize);
+                        var bitmap = new Bitmap(size, size);
                         using (var g = Graphics.FromImage(bitmap))
                         using (var brush = new SolidBrush(_canvas.HighlightColor))
                         {
-                            g.FillEllipse(brush, 0, 0, _canvas.LineSize, _canvas.LineSize);
+                            g.FillEllipse(brush, 0, 0, bitmap.Width, bitmap.Height);
                         }
                         _canvas.Cursor = new Cursor(bitmap.GetHicon());
                     }
