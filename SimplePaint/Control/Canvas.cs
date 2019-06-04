@@ -81,10 +81,13 @@ namespace SimplePaint
             switch(Mode)
             {
                 case DrawMode.Pen:
-                    _drawLine = new DrawLineMemento(Color, LineSize);
+                    _drawLine = new DrawLineMemento(Color, LineSize, DrawLineMemento.LineType.Diagonal);
+                    break;
+                case DrawMode.DiagonalPen:
+                    _drawLine = new DrawLineMemento(Color, LineSize, DrawLineMemento.LineType.Diagonal);
                     break;
                 case DrawMode.Highlighter:
-                    _drawLine = new DrawLineMemento(HighlightColor, LineSize);
+                    _drawLine = new DrawLineMemento(HighlightColor, LineSize, DrawLineMemento.LineType.Normal);
                     break;
                 case DrawMode.Square:
                     _drawSquare = new DrawSquareMemento(Color, LineSize, CalcScalePoint(e.Location));

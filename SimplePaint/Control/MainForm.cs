@@ -21,6 +21,8 @@ namespace SimplePaint
         public MainForm()
         {
             InitializeComponent();
+
+            CreateCanvas(500, 500);
         }
         #endregion
 
@@ -151,22 +153,41 @@ namespace SimplePaint
 
                 if (dialog.CanvasImage != null)
                 {
-                    _canvas = new Canvas(dialog.CanvasImage);
+                    CreateCanvas(dialog.CanvasImage);
                 }
                 else
                 {
-                    _canvas = new Canvas(dialog.CanvasWidth, dialog.CanvasHeight);
+                    CreateCanvas(dialog.CanvasWidth, dialog.CanvasHeight);
                 }
-                _canvas.Color = colorPicker.SelectedColor;
-                _canvas.LineSize = (int) numericUpDown_size.Value;
-                _canvas.Mode = GetCurrentDrawMode();
-                _canvas.Painted += canvas_Painted;
-
-                menuItem_save.Enabled = true;
-                menuItem_saveAs.Enabled = true;
-                panel_canvas.Controls.Add(_canvas);
-                ChangeCanvasCursor();
             }
+        }
+
+        private void CreateCanvas(Image img)
+        {
+            _canvas = new Canvas(img);
+            _canvas.Color = colorPicker.SelectedColor;
+            _canvas.LineSize = (int) numericUpDown_size.Value;
+            _canvas.Mode = GetCurrentDrawMode();
+            _canvas.Painted += canvas_Painted;
+
+            menuItem_save.Enabled = true;
+            menuItem_saveAs.Enabled = true;
+            panel_canvas.Controls.Add(_canvas);
+            ChangeCanvasCursor();
+        }
+
+        private void CreateCanvas(int width, int height)
+        {
+            _canvas = new Canvas(width, height);
+            _canvas.Color = colorPicker.SelectedColor;
+            _canvas.LineSize = (int) numericUpDown_size.Value;
+            _canvas.Mode = GetCurrentDrawMode();
+            _canvas.Painted += canvas_Painted;
+
+            menuItem_save.Enabled = true;
+            menuItem_saveAs.Enabled = true;
+            panel_canvas.Controls.Add(_canvas);
+            ChangeCanvasCursor();
         }
 
         private void Save()

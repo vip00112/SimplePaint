@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 
@@ -54,6 +56,9 @@ namespace SimplePaint
 
         public void Draw(Graphics g)
         {
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+            g.InterpolationMode = InterpolationMode.High;
             foreach (var memento in _mementos)
             {
                 memento.Draw(g);

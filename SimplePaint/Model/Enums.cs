@@ -5,5 +5,5 @@ using System.Text;
 
 namespace SimplePaint
 {
-    public enum DrawMode { Pen, Highlighter, Square, Circle };
+    public enum DrawMode { Pen, DiagonalPen, Highlighter, Square, Circle };
 }
